@@ -1,2 +1,53 @@
-# dreamx-ai-studio
-梦曦AI科技工作室官网 · mxai.link
+# 梦曦AI科技工作室 · 官网
+
+> 让每个人都能拥有自己的 AI · 让每门生意都能装上 AI 引擎
+
+部署在 [mxai.link](https://mxai.link) 的静态官网，包含 1 个主页 + 11 个商业方案详情页 + 404 页。
+
+## 站点结构
+
+| 文件 | 说明 |
+|---|---|
+| `index.html` | 极简品牌主页：软件开发 + 硬件开发两条主线 + 联系区 |
+| `01-AI本地部署.html` | DeepSeek/Qwen/Llama 本地私有化部署 |
+| `02-行业AI升级.html` | 餐饮/零售/教育/制造行业 AI 落地 |
+| `03-IP数字人.html` | 行业 IP 数字人定制 |
+| `04-AI获客.html` | 小红书/抖音/公众号自动获客 |
+| `05-AI推广.html` | AI 推广代运营 |
+| `06-AI内容.html` | AI 内容批量生产工作流 |
+| `07-AI客服.html` | AI 智能客服机器人 |
+| `08-AI数据分析.html` | AI 数据分析报告定制 |
+| `09-AI培训.html` | 企业 AI 培训陪跑 |
+| `10-AI全套方案.html` | 旗舰：从 0 到 1 全程陪跑 |
+| `11-具身智能人形机器人.html` | 具身智能人形机器人：机械手/仿真/数据采集/模型训练 |
+| `functions/api/embodied-plan.js` | Cloudflare Pages Functions/Workers API：具身智能项目评估器 |
+| `404.html` | 自定义 404 页 |
+| `sitemap.xml` · `robots.txt` | SEO 元信息（使用 mxai.link 域名） |
+
+## 设计规范
+
+- 主色：深蓝渐变 `#1a1a2e → #16213e → #0f3460`
+- 强调色：品红 `#e94560`，CTA 渐变 `linear-gradient(90deg, #e94560, #ff6b6b)`
+- 字体栈：`-apple-system, "PingFang SC", "Microsoft YaHei"`
+- 布局：750px 移动端栅格 + sticky 顶部站点导航 + sticky 底部 CTA
+- 价格策略：站点不展示具体价格，统一引导至[淘宝店铺](https://mxai.taobao.com)询价
+
+## 部署 (Cloudflare Pages)
+
+1. Cloudflare Dashboard → Workers & Pages → Create → Pages → **Connect to Git**
+2. 选择本仓库 `dreamx-ai-studio`
+3. **Build settings**：
+   - Framework preset: **None** (纯静态)
+   - Build command: 留空
+   - Build output directory: `/` (仓库根目录)
+4. **Custom domains** → Add → `mxai.link` + `www.mxai.link`（Cloudflare 会自动写入 CNAME）
+
+## 动态能力 (Cloudflare Workers)
+
+- `functions/api/embodied-plan.js` 会在 Cloudflare Pages 中自动部署为 Functions，底层运行在 Cloudflare Workers。
+- 前端栏目页调用同域接口：`POST /api/embodied-plan`。
+- 本地直接打开 HTML 时，评估器会使用前端备用逻辑；上线到 Pages 后优先使用 Workers API。
+
+## License
+
+© 2026 梦曦AI科技工作室 · 保留所有权利
